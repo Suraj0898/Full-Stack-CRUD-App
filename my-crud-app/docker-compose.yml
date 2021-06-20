@@ -1,0 +1,30 @@
+version: "3"
+services:
+  node_backend:
+    container_name: "node_backend"
+    build: ./api/
+    ports:
+      - "9000:9000"
+ 
+  pg:
+    image: "postgres:12"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      # - ./pg/db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+ 
+  react_frontend:
+    stdin_open: true
+    tty: true
+    container_name: "react_frontend"
+    build: ./client/
+    ports:
+      - "3000:3000"
+ 
+volumes:
+  postgres:
